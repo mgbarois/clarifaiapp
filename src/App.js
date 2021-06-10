@@ -125,42 +125,6 @@ class App extends Component {
     this.setState({ route: route });
   }
 
-
-  fetchTranslation = () => {
-
-    fetch("https://petapro-translate-v1.p.rapidapi.com/?query=verdienen&langpair=de-en", {
-      "method": "GET",
-      "headers": {
-        "x-rapidapi-key": "47c86962cfmsh4d4a43e5ec31decp1ed627jsndd3e016faa6f",
-        "x-rapidapi-host": "petapro-translate-v1.p.rapidapi.com"
-      }
-    })
-      .then(response => {
-        console.log(response);
-      })
-      .catch(err => {
-        console.error(err);
-      });
-    // fetch("https://libretranslate.com/translate", {
-    //   method: "POST",
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    // },
-    //   body: JSON.stringify({
-    //     q: "Hello!",
-    //     source: "en",
-    //     target: "es",
-    //     api_key:'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
-    //   })
-    // })
-    //   .then(res => res.json())
-    //   .then(data => {
-    //     this.setState({
-    //       translation: data.translatedText
-    //     })
-    //   });
-  }
-
   render() {
 
     const { route, isSignedIn, imageUrl, boxes, user } = this.state; // Destructure for tidiness
@@ -174,8 +138,6 @@ class App extends Component {
           this.state.route === 'home'
             ? <div>
               <Rank userName={user.name} userEntries={user.entries} />
-              <div onClick={this.fetchTranslation}>Translate</div>
-              <p>German translation: {this.state.translation}</p>
               <ImageLinkForm
                 onInputChange={this.onInputChange}
                 onPictureSubmit={this.onPictureSubmit} />
