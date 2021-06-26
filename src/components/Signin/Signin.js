@@ -23,7 +23,7 @@ class Signin extends React.Component {
     }
 
     onSubmitSignIn = () => {
-        fetch('http://localhost:3001/signin', { // Browser tools > Network > > 'singin' route Response will read 'success'
+        fetch('https://damp-oasis-01473.herokuapp.com/signin', { 
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
@@ -31,15 +31,15 @@ class Signin extends React.Component {
             body: JSON.stringify({
                 email: this.state.signInEmail,
                 password: this.state.signInPassword
-            })        
+            })
         })
-        .then(response => response.json())
-        .then(user => {
-            if (user.id) { // does the user exist? Did we receive a user with a property of id?
-                this.props.loadUser(user);
-                this.props.onRouteChange('home');                
-            }
-        })
+            .then(response => response.json())
+            .then(user => {
+                if (user.id) { // does the user exist? Did we receive a user with a property of id?
+                    this.props.loadUser(user);
+                    this.props.onRouteChange('home');
+                }
+            })
     }
     render() {
         const { onRouteChange } = this.props;
@@ -80,7 +80,7 @@ class Signin extends React.Component {
                                 style={{ cursor: 'pointer' }}
                                 onClick={() => onRouteChange('register')}>
                                 Register
-                    </p>
+                            </p>
                         </div>
                     </div>
                 </main>

@@ -31,7 +31,7 @@ class Register extends React.Component {
 
     onSubmit = () => {
         console.log(this.state);
-        fetch('http://localhost:3001/register', {
+        fetch('https://damp-oasis-01473.herokuapp.com/register', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
@@ -45,7 +45,7 @@ class Register extends React.Component {
             .then(response => response.json())
             .then(user => {
                 console.log(user);
-                if (user) { //If a user is returned?
+                if (user.id) { //If a user is returned?
                     this.props.loadUser(user);
                     this.props.onRouteChange('home');
                 }
@@ -53,7 +53,6 @@ class Register extends React.Component {
 
     }
     render() {
-
         return (
             <article className='br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center' style={{ background: 'white', opacity: 0.6 }}>
                 <main className="pa4 black-80">
@@ -94,7 +93,7 @@ class Register extends React.Component {
                                 type="submit"
                                 onClick={this.onSubmit}>
                                 Register
-                        </p>
+                            </p>
                         </div>
                     </div>
                 </main>

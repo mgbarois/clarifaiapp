@@ -8,8 +8,8 @@ const Navigation = ({onRouteChange, isSignedIn}) => {
             { isSignedIn 
                 ? <p className='f3 link dim black pa3 pointer' onClick={() => onRouteChange('signin')}>Sign Out</p>                 
                 : <div>
-                    <p className='f3 link dim black pa3 pointer' onClick={() => onRouteChange('signin')}>Sign In</p>
-                    <p className='f3 link dim black pa3 pointer' onClick={() => onRouteChange('register')}>Register</p>
+                    <p> <span className='f3 link dim black pa3 pointer' onClick={() => onRouteChange('signin')}>Sign In </span>| 
+                    <span className='f3 link dim black pa3 pointer' onClick={() => onRouteChange('register')}>Register</span></p>
                   </div>
             }             
         </nav>

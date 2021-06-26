@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Clarifai from 'clarifai';
+// import Clarifai from 'clarifai';
 // https://docs.clarifai.com/api-guide/api-overview/api-clients#client-installation-instructions
 // https://github.com/Clarifai/clarifai-javascript
 // https://github.com/Clarifai/clarifai-javascript/blob/master/src/index.js <-- List of all models
@@ -16,37 +16,38 @@ import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 
-const app = new Clarifai.App({
-  apiKey: '62ce0340ee1e4b38ae28fc9e65212fa3'
-});
+// const app = new Clarifai.App({
+//   apiKey: '62ce0340ee1e4b38ae28fc9e65212fa3'
+// });
+
+const initialState = {
+  input: '',
+  imageUrl: 'https://commons.bcit.ca/news/files/2018/05/college_students.jpg', // https://bocamolla.files.wordpress.com/2014/10/nelson-mandela.jpg
+  boxes: [],
+  route: 'signin', //keeps track of where we are on the page
+  isSignedIn: false,
+  translation: '',
+  user: {
+    id: '25',
+    name: '',
+    email: '',
+    entries: 0,
+    joined: ''
+  }
+}
 
 class App extends Component {
   constructor() {
     super();
-    this.state = {
-      input: '',
-      imageUrl: 'https://commons.bcit.ca/news/files/2018/05/college_students.jpg', // https://bocamolla.files.wordpress.com/2014/10/nelson-mandela.jpg
-      boxes: [],
-      route: 'signin', //keeps track of where we are on the page
-      isSignedIn: false,
-      translation: '',
-      user: {
-        id: '25',
-        name: '',
-        email: '',
-        entries: 0,
-        joined: ''
-      }
-    }
-    // this.onInputChange = this.onInputChange.bind(this); <-- Not necessary if you use arrow function format (see below)
-    // this.onPicture = this.onPicture.bind(this);
-
+    this.state = initialState;
   }
-
+  // this.onInputChange = this.onInputChange.bind(this); <-- Not necessary if you use arrow function format (see below)
+  // this.onPicture = this.onPicture.bind(this);
   componentDidMount() {
-    fetch('http://localhost:3001/')
+    fetch('https://damp-oasis-01473.herokuapp.com/')
       .then(resp => resp.json())
-      .then(console.log);
+      .then(console.log)
+      .catch(console.log);
   }
 
   loadUser = (data) => {
@@ -61,6 +62,7 @@ class App extends Component {
     })
   }
   calculateFaceLocations = (data) => {
+    console.log(data.outputs);
     const image = document.getElementById('inputImage');
     const width = Number(image.width); // Make sure that it's a number
     const height = Number(image.height); // Make sure that it's a number
@@ -94,21 +96,28 @@ class App extends Component {
     this.setState({
       imageUrl: input
     });
-
-    app.models.predict(Clarifai.FACE_DETECT_MODEL, input)
+  
+    // app.models.predict(Clarifai.FACE_DETECT_MODEL, input)
+    fetch('https://damp-oasis-01473.herokuapp.com/imageUrl', {
+      method: 'post',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify({ input })
+    })
+      .then(response => response.json() ) 
       .then(response => {
         if (response) {
-          fetch('http://localhost:3001/image', {
+         fetch('https://damp-oasis-01473.herokuapp.com/image', {
             method: 'put',
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify({
               id: this.state.user.id
             })
           })
-            .then(res => res.json())
+            .then(response => response.json())
             .then(count => {
-              this.setState(Object.assign(this.state.user, {entries : count}));                
+              this.setState(Object.assign(this.state.user, { entries: count }));
             })
+            .catch(console.log);
         }
         this.displayFaceBoxes(this.calculateFaceLocations(response));
       })
@@ -117,7 +126,8 @@ class App extends Component {
 
   onRouteChange = (route) => {
     if (route === 'signin') {
-      this.setState({ isSignedIn: false })
+      this.setState(initialState)
+      console.log(this.state.route)
     }
     else if (route === 'home') {
       this.setState({ isSignedIn: true })
@@ -128,6 +138,7 @@ class App extends Component {
   render() {
 
     const { route, isSignedIn, imageUrl, boxes, user } = this.state; // Destructure for tidiness
+
     return (
       <div className='App'>
         <Particles className='particles'
