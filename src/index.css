@@ -4,7 +4,8 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'KoHo', sans-serif;
-  background: linear-gradient(89deg, rgb(31, 92, 94) 0%, rgb(126, 228, 206) 100%); /* w3c */
+  /* background: linear-gradient(89deg, rgb(31, 92, 94) 0%, rgb(126, 228, 206) 100%);  */
+  background: linear-gradient(89deg, rgb(126, 41, 41) 0%, rgb(245, 181, 173) 100%);
   /*background: linear-gradient(130deg, rgb(31, 92, 94), rgb(126, 228, 206));*/
 }
 

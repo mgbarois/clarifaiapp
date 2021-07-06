@@ -15,6 +15,7 @@ import Register from './components/Register/Register';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
+import Header from './components/Header'
 
 // const app = new Clarifai.App({
 //   apiKey: '62ce0340ee1e4b38ae28fc9e65212fa3'
@@ -145,6 +146,7 @@ class App extends Component {
           params={particleOptions}
         />
         <Navigation route={route} onRouteChange={this.onRouteChange} isSignedIn={isSignedIn} />
+        <Header />
         {
           this.state.route === 'home'
             ? <div>

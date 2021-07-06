@@ -6,10 +6,10 @@ const Navigation = ({onRouteChange, isSignedIn}) => {
         <nav className='ma4 mt0' style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 120}} width='100%'>
             <Logo/>
             { isSignedIn 
-                ? <p className='f3 link dim black pa3 pointer' onClick={() => onRouteChange('signin')}>Sign Out</p>                 
-                : <div>
-                    <p> <span className='f3 link dim black pa3 pointer' onClick={() => onRouteChange('signin')}>Sign In </span>| 
-                    <span className='f3 link dim black pa3 pointer' onClick={() => onRouteChange('register')}>Register</span></p>
+                ? <span className='f5 link dim br1 ba ph3 pv2 mb2 dib black' onClick={() => onRouteChange('signin')}>Sign Out</span>                 
+                : <div className="f5 link dim br1 ba ph3 pv2 mb2 dib black">
+                    <span className='f5 link br1 dim black pa1 pointer' onClick={() => onRouteChange('signin')}>Sign In </span>| 
+                    <span className='f5 link dim black pa1 pointer' onClick={() => onRouteChange('register')}>Register</span>
                   </div>
             }             
         </nav>
